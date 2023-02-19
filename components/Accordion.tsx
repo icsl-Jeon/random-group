@@ -14,7 +14,7 @@ const Accordion: React.FC<Props> = ({ title, children }) => {
       <h2 className="">
         <button
           type="button"
-          className="rounded-t-md flex items-center shadow-sm justify-between bg-gray-100  w-full p-5 font-medium text-left text-gray-400 border border-gray-200  focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-transform duration-300"
+          className="rounded-t-md flex items-center shadow-sm justify-between bg-slate-50  w-full p-5 font-medium text-left text-gray-500 border border-gray-200  focus:ring-slate-200 hover:bg-slate-100 transition-transform duration-300"
           data-accordion-target="#accordion-collapse-body-1"
           aria-expanded="true"
           aria-controls="accordion-collapse-body-1"
@@ -43,12 +43,12 @@ const Accordion: React.FC<Props> = ({ title, children }) => {
 
       <Transition
         show={isOpen}
-        enter="transition-all ease-out duration-200"
-        enterFrom="max-h-0 opacity-0"
-        enterTo="max-h-full opacity-100"
-        leave="transition-all ease-in duration-200"
-        leaveFrom="max-h-full opacity-100"
-        leaveTo="max-h-0 opacity-0"
+        enter="transition-all ease-out duration-100"
+        enterFrom="max-h-0"
+        enterTo="max-h-full"
+        leave="transition-all ease-out duration-100"
+        leaveFrom="max-h-full"
+        leaveTo="max-h-0 "
       >
         <div className="overflow-hidden p-4 border-2 border-b-gray-100">
           {" "}

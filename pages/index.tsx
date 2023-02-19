@@ -1,11 +1,16 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import Accordion from "@/components/accordion";
-import { Fragment } from "react";
+import Accordion from "@/components/Accordion";
+import { useState } from "react";
+import { initialAttributeTypeList, initialMemberList } from "@/lib/initials";
+import { AttributeType } from "@/lib/types";
+import EditPortal from "@/template/EditPortal";
+import CreatePortal from "@/template/CreatePortal";
 
 export default function Home() {
+  const [attributeTypeList, setAttributeTypeList] = useState<AttributeType[]>(
+    initialAttributeTypeList
+  );
+
   return (
     <>
       <Head>
@@ -17,11 +22,16 @@ export default function Home() {
       </Head>
 
       <div className="max-w-screen-lg mx-auto">
-        <h1 className="font-sans font-light text-3xl text-gray-600 mx-auto text-center sm:text-left py-5 px-2">
+        <h1 className="font-sans font-bold text-gray-600 text-3xl  mx-auto text-center sm:text-left py-5 px-2">
           Diverse group generator
         </h1>
         <Accordion title="1. Register members to be grouped">
-          <div>My name</div>
+          <div className="flex">
+            {attributeTypeList.map((item) => {
+              return <EditPortal key={item.key} attributeType={item} />;
+            })}
+            <CreatePortal></CreatePortal>
+          </div>
         </Accordion>
         <Accordion title="2. Grouping setup">
           <div>My name</div>
