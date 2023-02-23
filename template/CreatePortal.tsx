@@ -14,14 +14,14 @@ const CreatePortal: React.FC<Props> = () => {
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        className={`flex items-center px-4 py-2 mx-1 relative transition duration-300 hover:bg-slate-200 rounded-full text-gray-500 bg-slate-100 text-sm flex align-center cursor-pointer transition duration-300 ease w-max	my-2`}
+        className={`flex items-center px-4 py-2 mx-1 relative transition duration-300 hover:bg-sky-600 rounded-full text-gray-500 bg-sky-500 text-sm flex align-center cursor-pointer transition duration-300 ease w-max	my-2`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
-          stroke="black"
+          stroke="white"
           className="w-6 h-6"
         >
           {" "}
@@ -31,7 +31,7 @@ const CreatePortal: React.FC<Props> = () => {
             d="M12 6v12m6-6H6"
           />{" "}
         </svg>
-        <span className="font-semibold">New attribute</span>
+        <span className=" text-white">New attribute</span>
       </div>
       <Modal
         title={"Edit attribute"}
@@ -49,6 +49,9 @@ const CreatePortal: React.FC<Props> = () => {
               { key: 1, name: "Introverted" },
             ],
             newOptionKey: 2,
+          }}
+          toggleModal={() => {
+            setIsOpen(false);
           }}
         ></AttributeTypeEditor>
       </Modal>
