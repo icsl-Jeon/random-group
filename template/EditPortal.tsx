@@ -6,9 +6,10 @@ import AttributeTypeEditor from "@/components/AttributeTypeEditor";
 
 interface Props {
   attributeType: AttributeType;
+  onAttributeTypeUpdate: (newAttributeType: AttributeType) => void;
 }
 
-const EditPortal = ({ attributeType }: Props) => {
+const EditPortal = ({ attributeType, onAttributeTypeUpdate }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -40,6 +41,7 @@ const EditPortal = ({ attributeType }: Props) => {
         }}
       >
         <AttributeTypeEditor
+          onAttributeTypeUpdate={onAttributeTypeUpdate}
           initialAttributeType={attributeType}
           toggleModal={() => {
             setIsOpen(false);

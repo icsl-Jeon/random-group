@@ -2,10 +2,13 @@ import Chip from "@/components/Chip";
 import React, { useState } from "react";
 import Modal from "@/components/Modal";
 import AttributeTypeEditor from "@/components/AttributeTypeEditor";
+import { AttributeType } from "@/lib/types";
 
-interface Props {}
+interface Props {
+  onAttributeTypeAdd: (newAttributeType: AttributeType) => void;
+}
 
-const CreatePortal: React.FC<Props> = () => {
+const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -42,7 +45,7 @@ const CreatePortal: React.FC<Props> = () => {
       >
         <AttributeTypeEditor
           initialAttributeType={{
-            key: 0,
+            key: -1,
             name: "Personality",
             optionList: [
               { key: 0, name: "Extroverted" },
@@ -53,6 +56,7 @@ const CreatePortal: React.FC<Props> = () => {
           toggleModal={() => {
             setIsOpen(false);
           }}
+          onAttributeTypeUpdate={onAttributeTypeAdd}
         ></AttributeTypeEditor>
       </Modal>
     </div>

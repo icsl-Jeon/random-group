@@ -1,15 +1,40 @@
 import Head from "next/head";
 import Accordion from "@/components/Accordion";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { initialAttributeTypeList, initialMemberList } from "@/lib/initials";
 import { AttributeType } from "@/lib/types";
 import EditPortal from "@/template/EditPortal";
 import CreatePortal from "@/template/CreatePortal";
 
 export default function Home() {
+  const newKey = useRef(2);
   const [attributeTypeList, setAttributeTypeList] = useState<AttributeType[]>(
     initialAttributeTypeList
   );
+  const handleAttributeTypeUpdate = (newAttributeType: AttributeType) => {
+    const result = attributeTypeList.find(
+      (item) => item.key === newAttributeType.key
+    );
+    if (result) {
+      setAttributeTypeList((previousAttributeTypeList) => {
+        const updatedAttributeTypeList = previousAttributeTypeList.map(
+          (item) => {
+            if (item.key === newAttributeType.key) {
+              return newAttributeType;
+            }
+            return item;
+          }
+        );
+        return updatedAttributeTypeList;
+      });
+    } else {
+      setAttributeTypeList([
+        ...attributeTypeList,
+        { ...newAttributeType, key: newKey.current },
+      ]);
+      newKey.current++;
+    }
+  };
 
   return (
     <>
@@ -19,6 +44,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         <link rel="icon" href="/favicon.ico" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6825630715558369"
+          crossOrigin="anonymous"
+        ></script>
       </Head>
 
       <div className="max-w-screen-lg mx-auto">
@@ -28,9 +58,17 @@ export default function Home() {
         <Accordion title="1. Register members to be grouped">
           <div className="flex">
             {attributeTypeList.map((item) => {
-              return <EditPortal key={item.key} attributeType={item} />;
+              return (
+                <EditPortal
+                  key={item.key}
+                  attributeType={item}
+                  onAttributeTypeUpdate={handleAttributeTypeUpdate}
+                />
+              );
             })}
-            <CreatePortal></CreatePortal>
+            <CreatePortal
+              onAttributeTypeAdd={handleAttributeTypeUpdate}
+            ></CreatePortal>
           </div>
         </Accordion>
         <Accordion title="2. Grouping setup">

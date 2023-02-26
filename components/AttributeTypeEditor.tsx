@@ -5,9 +5,15 @@ import OptionList from "@/components/OptionList";
 interface Props {
   initialAttributeType: AttributeType;
   toggleModal: () => void;
+  onAttributeTypeUpdate: (newAttributeType: AttributeType) => void;
 }
 
-const AttributeTypeEditor = ({ initialAttributeType, toggleModal }: Props) => {
+const AttributeTypeEditor = ({
+  initialAttributeType,
+  toggleModal,
+  onAttributeTypeUpdate,
+}: Props) => {
+  const attributeKey = initialAttributeType.key;
   const [attributeName, setAttributeName] = useState<string>(
     initialAttributeType.name
   );
@@ -51,7 +57,14 @@ const AttributeTypeEditor = ({ initialAttributeType, toggleModal }: Props) => {
     });
   }, []);
 
-  const handleUpdateButtonClick = (event: React.MouseEvent) => {};
+  const handleUpdateButtonClick = (event: React.MouseEvent) => {
+    onAttributeTypeUpdate({
+      newOptionKey: newOptionId.current,
+      name: attributeName,
+      optionList: optionList,
+      key: attributeKey,
+    });
+  };
 
   return (
     <div className="flex flex-col ">
@@ -80,6 +93,7 @@ const AttributeTypeEditor = ({ initialAttributeType, toggleModal }: Props) => {
           <button
             onClick={(event: React.MouseEvent) => {
               handleUpdateButtonClick(event);
+              toggleModal();
             }}
             className="inline-flex w-full justify-center rounded-md border border-transparent bg-sky-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-bluw-500 focus:ring-offset-2 sm:ml-3 sm:mr-3 sm:w-auto sm:text-sm"
           >
