@@ -15,6 +15,7 @@ export default function Home() {
     const result = attributeTypeList.find(
       (item) => item.key === newAttributeType.key
     );
+    // console.log(newAttributeType)
     if (result) {
       setAttributeTypeList((previousAttributeTypeList) => {
         const updatedAttributeTypeList = previousAttributeTypeList.map(
@@ -51,8 +52,8 @@ export default function Home() {
         ></script>
       </Head>
 
-      <div className="max-w-screen-lg mx-auto">
-        <h1 className="font-sans font-bold text-gray-600 text-3xl  mx-auto text-center sm:text-left py-5 px-2">
+      <div className="mx-auto max-w-screen-lg">
+        <h1 className="mx-auto py-5 px-2 text-center  font-sans text-3xl font-bold text-gray-600 sm:text-left">
           Diverse group generator
         </h1>
         <Accordion title="1. Register members to be grouped">

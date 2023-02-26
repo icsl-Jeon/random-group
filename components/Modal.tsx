@@ -43,22 +43,25 @@ const Modal: React.FC<Props> = ({ children, title, isOpen, setIsOpen }) => {
           <div className="fixed inset-0 bg-gray-200 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-10 overflow-y-auto relative">
-          <div className="flex min-h-fullitems-end justify-center p-4 text-center sm:items-center sm:p-0  ">
+        <div
+          className="fixed relative inset-0 z-10 overflow-y-auto"
+          style={{ transform: "translateY(-20%)" }}
+        >
+          <div className="min-h-fullitems-end flex justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterFrom="opacity-0 translate-y-2 sm:translate-y-0 sm:scale-95"
               enterTo="opacity-100 translate-y-0 sm:scale-100"
               leave="ease-in duration-200"
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              leaveTo="opacity-0 translate-y-2 sm:translate-y-0 sm:scale-95"
             >
               {/* This is where we adjust width of popup */}
-              <Dialog.Panel className=" relative transform overflow-hidden rounded-lg bg-white text-left shadow-md transition-all sm:my-8 sm:max-w-xl">
+              <Dialog.Panel className=" relative transform overflow-hidden rounded-lg bg-white text-left shadow-md transition-all sm:my-3 sm:max-w-xl">
                 <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="" id="containing div">
-                    <div className="mt-3 text-center sm:mt-0  sm:mx-0 sm:text-left">
+                    <div className="mt-3 text-center sm:mx-0  sm:mt-0 sm:text-left">
                       <Dialog.Title
                         as="h3"
                         className="text-lg font-medium leading-6 text-gray-900"
