@@ -2,15 +2,16 @@ import React, { useState } from "react";
 
 interface Props {
   children: React.ReactNode;
-  color: string;
 }
 
-const Chip = ({ children, color }: Props) => {
+const Chip = ({ children }: Props) => {
   return (
     <div
-      className={`mx-1 relative transition duration-300 hover:bg-${color}-200 rounded-full text-gray-500 bg-${color}-100 text-sm flex align-center cursor-pointer transition duration-300 ease w-max	my-2`}
+      className={`align-center ease relative mx-1 my-2 flex w-max cursor-pointer rounded-full bg-slate-100 text-sm text-gray-500 transition transition duration-300 duration-300	hover:bg-slate-200`}
     >
-      <span className="flex items-center pl-3 pr-1 py-2">{children}</span>
+      <span className="flex items-center py-2 pl-3 pr-1 sm:text-sm">
+        {children}
+      </span>
     </div>
   );
 };
