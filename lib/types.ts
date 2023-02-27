@@ -9,3 +9,11 @@ export interface AttributeType {
   optionList: Array<Option>;
   newOptionKey: number;
 }
+
+export interface Member {
+  key: number;
+  attributeList: Array<{
+    attributeTypeKey: number;
+    attributeTypeValue: Option;
+  }>;
+}

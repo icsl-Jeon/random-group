@@ -1,10 +1,12 @@
 import Head from "next/head";
 import Accordion from "@/components/Accordion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { initialAttributeTypeList, initialMemberList } from "@/lib/initials";
-import { AttributeType } from "@/lib/types";
+import { AttributeType, Member } from "@/lib/types";
+import MemberTable from "@/components/MemberTable";
 import EditPortal from "@/template/EditPortal";
 import CreatePortal from "@/template/CreatePortal";
+import { generateRandomMemberList } from "@/lib/utility";
 
 export default function Home() {
   const newKey = useRef(2);
@@ -37,6 +39,38 @@ export default function Home() {
     }
   };
 
+  const [memberList, setMemberList] = useState<Member[]>([]);
+
+  useEffect(() => {
+    setMemberList(generateRandomMemberList(attributeTypeList, 3));
+  }, []);
+
+  const handleOptionChange = (
+    updatedMemberKey: number,
+    attributeTypeKey: number,
+    attributeValueKey: number
+  ) => {
+    const newMemberList = memberList.map((member) =>
+      member.key === updatedMemberKey
+        ? {
+            ...member,
+            attributeList: member.attributeList.map((attribute) =>
+              attribute.attributeTypeKey === attributeTypeKey
+                ? {
+                    ...attribute,
+                    attributeTypeValue:
+                      initialAttributeTypeList[attributeTypeKey].optionList[
+                        attributeValueKey
+                      ],
+                  }
+                : attribute
+            ),
+          }
+        : member
+    );
+    setMemberList(newMemberList);
+  };
+
   return (
     <>
       <Head>
@@ -57,19 +91,35 @@ export default function Home() {
           Diverse group generator
         </h1>
         <Accordion title="1. Register members to be grouped">
-          <div className="flex">
-            {attributeTypeList.map((item) => {
-              return (
-                <EditPortal
-                  key={item.key}
-                  attributeType={item}
-                  onAttributeTypeUpdate={handleAttributeTypeUpdate}
-                />
-              );
-            })}
-            <CreatePortal
-              onAttributeTypeAdd={handleAttributeTypeUpdate}
-            ></CreatePortal>
+          <div className={"p-4"}>
+            <p className="font-semibold mb-2 text-gray-600">
+              Toggle attributes to build member list 😊
+            </p>
+
+            <div className="flex sm:px-3 flex-wrap">
+              {attributeTypeList.map((item) => {
+                return (
+                  <EditPortal
+                    key={item.key}
+                    attributeType={item}
+                    onAttributeTypeUpdate={handleAttributeTypeUpdate}
+                  />
+                );
+              })}
+              <CreatePortal
+                onAttributeTypeAdd={handleAttributeTypeUpdate}
+              ></CreatePortal>
+            </div>
+            <p className="font-semibold mb-2 mt-5 text-gray-600 ">
+              Create, delete, modify member list 😆
+            </p>
+            <div className={"px-3"}>
+              <MemberTable
+                members={memberList}
+                attributeTypes={initialAttributeTypeList}
+                onOptionDropdownChange={handleOptionChange}
+              />
+            </div>
           </div>
         </Accordion>
         <Accordion title="2. Grouping setup">

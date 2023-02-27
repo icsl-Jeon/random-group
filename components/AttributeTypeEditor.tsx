@@ -95,7 +95,7 @@ const AttributeTypeEditor = ({
               handleUpdateButtonClick(event);
               toggleModal();
             }}
-            className="focus:ring-bluw-500 inline-flex w-full justify-center rounded-md border border-transparent bg-sky-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:mr-3 sm:w-auto sm:text-sm"
+            className="focus:ring-blue-500 inline-flex w-full justify-center rounded-md border border-transparent bg-sky-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:mr-3 sm:w-auto sm:text-sm"
           >
             Done
           </button>

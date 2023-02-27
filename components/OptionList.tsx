@@ -42,7 +42,7 @@ export const ListAdder: React.FC<AddProps> = ({ onItemAdd }) => {
   }, []);
 
   return (
-    <div className={"ml-2 w-full py-1.5 text-slate-300"}>
+    <div className={"ml-3 w-full py-1.5 text-slate-300"}>
       {" "}
       {!isAdding && (
         <button
@@ -112,13 +112,13 @@ const OptionList: React.FC<Props> = ({
   };
 
   return (
-    <ul className="rounded-md text-sm" onClick={handleClick}>
+    <ul className="rounded-md text-sm " onClick={handleClick}>
       {items.map((item) => (
         <li
           key={item.key}
           id={`item-${item.key}`}
           // onDoubleClick={() => startEdit(item.key, item.name)}
-          className="my-1 text-gray-500"
+          className="my-1 text-gray-500 p-1"
         >
           {editingId === item.key ? (
             <input

@@ -17,7 +17,7 @@ const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        className={`flex items-center px-4 py-2 mx-1 relative transition duration-300 hover:bg-sky-600 rounded-full text-gray-500 bg-sky-500 text-sm flex align-center cursor-pointer transition duration-300 ease w-max	my-2`}
+        className={`flex items-center px-4 py-2 mx-1 relative transition duration-300 hover:bg-sky-200 rounded-full text-gray-500 bg-sky-500 text-sm flex align-center cursor-pointer transition duration-300 ease w-max	my-2`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {
         <span className=" text-white">New attribute</span>
       </div>
       <Modal
-        title={"Edit attribute"}
+        title={"Create attribute"}
         isOpen={isOpen}
         setIsOpen={() => {
           setIsOpen(!isOpen);
@@ -46,7 +46,7 @@ const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {
         <AttributeTypeEditor
           initialAttributeType={{
             key: -1,
-            name: "Personality",
+            name: "Personality (example)",
             optionList: [
               { key: 0, name: "Extroverted" },
               { key: 1, name: "Introverted" },
