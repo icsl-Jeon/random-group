@@ -1,4 +1,3 @@
-import Chip from "@/components/Chip";
 import React, { useState } from "react";
 import Modal from "@/components/Modal";
 import AttributeTypeEditor from "@/components/AttributeTypeEditor";
@@ -17,7 +16,7 @@ const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        className={`flex items-center px-4 py-2 mx-1 relative transition duration-300 hover:bg-sky-200 rounded-full text-gray-500 bg-sky-500 text-sm flex align-center cursor-pointer transition duration-300 ease w-max	my-2`}
+        className={`flex items-center px-4 py-2 mx-1 relative transition duration-300 hover:bg-sky-600 rounded-full text-gray-500 bg-sky-500 text-sm flex align-center cursor-pointer transition duration-300 ease w-max	my-2`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -52,6 +51,7 @@ const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {
               { key: 1, name: "Introverted" },
             ],
             newOptionKey: 2,
+            isAppliedToMemberList: false,
           }}
           toggleModal={() => {
             setIsOpen(false);

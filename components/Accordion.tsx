@@ -4,10 +4,11 @@ import { Transition } from "@headlessui/react";
 interface Props {
   title: string;
   children: React.ReactNode;
+  isInitialOpen: boolean;
 }
 
-const Accordion: React.FC<Props> = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Accordion: React.FC<Props> = ({ title, children, isInitialOpen }) => {
+  const [isOpen, setIsOpen] = useState(isInitialOpen);
 
   return (
     <div className="">
@@ -41,15 +42,7 @@ const Accordion: React.FC<Props> = ({ title, children }) => {
         </button>
       </h2>
 
-      <Transition
-        show={isOpen}
-        enter="transition-all ease-out duration-100"
-        enterFrom="max-h-0"
-        enterTo="max-h-full"
-        leave="transition-all ease-out duration-100"
-        leaveFrom="max-h-full"
-        leaveTo="max-h-0 "
-      >
+      <Transition show={isOpen}>
         <div className="overflow-hidden p-4 border-2 border-b-gray-100">
           {" "}
           {children}{" "}

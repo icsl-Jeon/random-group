@@ -63,6 +63,7 @@ const AttributeTypeEditor = ({
       name: attributeName,
       optionList: optionList,
       key: attributeKey,
+      isAppliedToMemberList: false,
     });
   };
 

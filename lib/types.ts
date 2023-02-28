@@ -8,6 +8,7 @@ export interface AttributeType {
   name: string;
   optionList: Array<Option>;
   newOptionKey: number;
+  isAppliedToMemberList: boolean;
 }
 
 export interface Member {
