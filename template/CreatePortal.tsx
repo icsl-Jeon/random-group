@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Modal from "@/components/Modal";
 import AttributeTypeEditor from "@/components/AttributeTypeEditor";
-import { AttributeType } from "@/lib/types";
+import {AttributeType} from "@/lib/types";
 
 interface Props {
   onAttributeTypeAdd: (newAttributeType: AttributeType) => void;
 }
 
-const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {
+const CreatePortal: React.FC<Props> = ({onAttributeTypeAdd}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -31,7 +31,8 @@ const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {
             strokeLinecap="round"
             strokeLinejoin="round"
             d="M12 6v12m6-6H6"
-          />{" "}
+          />
+          {" "}
         </svg>
         <span className=" text-white">New attribute</span>
       </div>
@@ -47,8 +48,8 @@ const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {
             key: -1,
             name: "Personality (example)",
             optionList: [
-              { key: 0, name: "Extroverted" },
-              { key: 1, name: "Introverted" },
+              {key: 0, name: "Extroverted"},
+              {key: 1, name: "Introverted"},
             ],
             newOptionKey: 2,
             isAppliedToMemberList: false,

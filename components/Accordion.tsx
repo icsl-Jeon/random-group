@@ -42,12 +42,16 @@ const Accordion: React.FC<Props> = ({ title, children, isInitialOpen }) => {
         </button>
       </h2>
 
-      <Transition show={isOpen}>
+      <div
+        className={`pt-0 overflow-y-auto transition-all duration-400 ease-in ${
+          isOpen ? "max-h-96" : "max-h-0"
+        }`}
+      >
         <div className="overflow-hidden p-4 border-2 border-b-gray-100">
           {" "}
           {children}{" "}
         </div>
-      </Transition>
+      </div>
     </div>
   );
 };

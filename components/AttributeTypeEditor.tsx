@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useRef } from "react";
-import { AttributeType, Option } from "@/lib/types";
+import React, {useState, useCallback, useRef} from "react";
+import {AttributeType, Option} from "@/lib/types";
 import OptionList from "@/components/OptionList";
 
 interface Props {
@@ -9,10 +9,10 @@ interface Props {
 }
 
 const AttributeTypeEditor = ({
-  initialAttributeType,
-  toggleModal,
-  onAttributeTypeUpdate,
-}: Props) => {
+                               initialAttributeType,
+                               toggleModal,
+                               onAttributeTypeUpdate,
+                             }: Props) => {
   const attributeKey = initialAttributeType.key;
   const [attributeName, setAttributeName] = useState<string>(
     initialAttributeType.name
@@ -34,7 +34,7 @@ const AttributeTypeEditor = ({
       // key cannot be changed. Only name is changed
       const updatedItems = prevItems.map((item) => {
         if (item.key === updatedOption.key) {
-          return { ...item, name: updatedOption.name };
+          return {...item, name: updatedOption.name};
         }
         return item;
       });
@@ -45,7 +45,7 @@ const AttributeTypeEditor = ({
     (addedOptionName: string) => {
       setOptionList([
         ...optionList,
-        { key: newOptionId.current, name: addedOptionName },
+        {key: newOptionId.current, name: addedOptionName},
       ]);
       newOptionId.current += 1;
     },
@@ -102,7 +102,7 @@ const AttributeTypeEditor = ({
           </button>
 
           <button
-            className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             onClick={toggleModal}
           >
             {" "}

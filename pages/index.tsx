@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Accordion from "@/components/Accordion";
-import {useState, useRef, useEffect} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {initialAttributeTypeList, initialMemberList} from "@/lib/initials";
 import {AttributeType, Member} from "@/lib/types";
 import MemberTable from "@/components/MemberTable";
@@ -146,12 +146,12 @@ export default function Home() {
           title="1. Register members to be grouped"
           isInitialOpen={true}
         >
-          <div className={"p-4"}>
+          <div className={"p-4 "}>
             <p className="font-semibold mb-2 text-gray-600">
               Toggle attributes to build member list.
             </p>
 
-            <div className="flex sm:px-3 flex-wrap">
+            <div className="flex sm:px-3 flex-wrap rounded-lg p-3">
               {attributeTypeList.map((item) => {
                 return (
                   <EditPortal
@@ -166,9 +166,39 @@ export default function Home() {
                 onAttributeTypeAdd={handleAttributeTypeUpdate}
               ></CreatePortal>
             </div>
-            <p className="font-semibold mb-2 mt-5 text-gray-600 ">
-              Create, delete, modify member list.
-            </p>
+
+            <div
+              className={
+                "flex flex-col sm:flex-row justify-between items-center mt-2 sm:mt-5"
+              }
+            >
+              <p className="font-semibold  text-gray-600 ">
+                Add, delete, modify member list.
+              </p>
+              <button
+                className={
+                  "bg-sky-500 hover:bg-sky-600 text-center m-2 sm:m-0 p-2 rounded-lg font-medium text-white px-4 flex flex-row justify-center"
+                }
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  {" "}
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6v12m6-6H6"
+                  />
+                  {" "}
+                </svg>
+                <p>New member</p>
+              </button>
+            </div>
             <div className={"px-1"}>
               <MemberTable
                 members={memberList}
