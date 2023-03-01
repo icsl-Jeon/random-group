@@ -9,12 +9,14 @@ interface Props {
     attributeTypeKey: number,
     attributeValueKey: number
   ) => void;
+  onMemberRemove: (removedMemberKey: number) => void;
 }
 
 const MemberTable: React.FC<Props> = ({
   members,
   attributeTypes,
   onOptionDropdownChange,
+  onMemberRemove,
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<{
     [key: number]: number;
@@ -32,23 +34,31 @@ const MemberTable: React.FC<Props> = ({
   };
 
   return (
-    <div className="sm:p-5 flex flex-col items-center">
+    <div className="sm:p-2 flex flex-col items-center">
       <table className="border-collapse table-auto w-full text-left">
         <thead className="border-b text-sm sm:text-md">
           <tr className="">
             <th className="sm:px-4 py-2  ">Member id</th>
-            {attributeTypes.map((attributeType, index) => (
-              <th className="px-4 py-2 " key={index}>
-                {attributeType.name}
-              </th>
-            ))}
+            {attributeTypes.map((attributeType, index) => {
+              if (attributeType.isAppliedToMemberList)
+                return (
+                  <th className="px-4 py-2 " key={index}>
+                    {attributeType.name}
+                  </th>
+                );
+            })}
           </tr>
         </thead>
         <tbody>
           {members.map((member) => (
             <tr key={member.key} className="text-sm ">
               <td className="px-4 py-2 flex">
-                <button className={"mr-2 rounded-full hover:bg-slate-200"}>
+                <button
+                  className={"mr-2 rounded-full hover:bg-slate-200"}
+                  onClick={() => {
+                    onMemberRemove(member.key);
+                  }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -66,16 +76,18 @@ const MemberTable: React.FC<Props> = ({
                 {member.key}
               </td>
               {attributeTypes.map((attributeType) => {
+                if (!attributeType.isAppliedToMemberList) return;
                 const attribute = member.attributeList.find(
                   (attr) => attr.attributeTypeKey === attributeType.key
                 );
                 if (!attribute) return;
+
                 const selectedOptionId = attribute.attributeTypeValue.key;
 
                 return (
                   <td key={attributeType.key} className=" px-2 py-2 text-sm">
                     <select
-                      className="bg-white sm:p-2 text-gray-700 text-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                      className="bg-white sm:p-2 text-gray-700 text-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                       value={selectedOptionId}
                       onChange={(event) => {
                         handleOptionSelection(
@@ -103,30 +115,6 @@ const MemberTable: React.FC<Props> = ({
           ))}
         </tbody>
       </table>
-      <div className={"sm:px-4 min-w-full"}>
-        <button
-          className={
-            "hover:bg-sky-50 min-w-full text-center mt-2 p-2 rounded-md font-medium text-gray-600 text-md px-4 flex flex-row justify-center"
-          }
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            {" "}
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 6v12m6-6H6"
-            />{" "}
-          </svg>
-          <p>Add new member</p>
-        </button>
-      </div>
     </div>
   );
 };
