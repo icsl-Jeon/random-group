@@ -17,7 +17,7 @@ export const initialAttributeTypeList = [
     ],
     key: 1,
     newOptionKey: 2,
-    isAppliedToMemberList: true,
+    isAppliedToMemberList: false,
   },
 ];
 
