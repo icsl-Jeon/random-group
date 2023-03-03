@@ -12,6 +12,8 @@
     "@headlessui/react": "^1.7.11",
     "@heroicons/react": "^2.0.16",
     "@next/font": "13.1.6",
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.9",
     "@types/node": "18.13.0",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.10",
@@ -20,6 +22,8 @@
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.7.3",
     "typescript": "4.9.5"
   },
   "devDependencies": {
