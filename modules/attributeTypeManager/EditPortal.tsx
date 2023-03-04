@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AttributeType } from "@/lib/types";
-import Modal from "@/components/Modal";
-import AttributeTypeEditor from "@/components/AttributeTypeEditor";
+import Modal from "@/layout/Modal";
+import AttributeTypeEditor from "@/modules/attributeTypeManager/AttributeTypeEditor";
 
 interface Props {
   attributeType: AttributeType;

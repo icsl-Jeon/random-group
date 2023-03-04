@@ -1,11 +1,11 @@
 import Head from "next/head";
-import Accordion from "@/components/Accordion";
+import Accordion from "@/layout/Accordion";
 import React, { useState, useRef, useEffect } from "react";
 import { initialAttributeTypeList, initialMemberList } from "@/lib/initials";
 import { AttributeType, Member } from "@/lib/types";
-import MemberTable from "@/components/MemberTable";
-import EditPortal from "@/template/EditPortal";
-import CreatePortal from "@/template/CreatePortal";
+import MemberTable from "@/modules/memberListManager/MemberTable";
+import EditPortal from "@/modules/attributeTypeManager/EditPortal";
+import CreatePortal from "@/modules/attributeTypeManager/CreatePortal";
 import {
   generateRandomMemberList,
   addAttribute,
@@ -13,14 +13,17 @@ import {
   generateRandomMember,
 } from "@/lib/utility";
 import Swal from "sweetalert2";
+import AttributeTypeManager from "@/modules/attributeTypeManager/AttributeTypeManager";
+import MemberListManager from "@/modules/memberListManager/MemberListManager";
 
 export default function Home() {
+  // Attribute type handlers
+
   const newAttributeKey = useRef(2);
   const [attributeTypeList, setAttributeTypeList] = useState<AttributeType[]>(
     initialAttributeTypeList
   );
 
-  // Attribute type handlers
   const handleAttributeTypeUpdate = (newAttributeType: AttributeType) => {
     const result = attributeTypeList.find(
       (item) => item.key === newAttributeType.key
@@ -191,66 +194,18 @@ export default function Home() {
           isInitialOpen={true}
         >
           <div className={"p-4 "}>
-            <p className="font-semibold mb-2 text-gray-600 sm:text-left text-center">
-              Toggle attributes to build member list.
-            </p>
-
-            <div className="flex sm:px-3 flex-wrap rounded-lg p-3 items-center">
-              {attributeTypeList.map((item) => {
-                return (
-                  <EditPortal
-                    key={item.key}
-                    attributeType={item}
-                    onAttributeTypeUpdate={handleAttributeTypeUpdate}
-                    onToggle={handleAttributeTypeToggle}
-                  />
-                );
-              })}
-              <CreatePortal
-                onAttributeTypeAdd={handleAttributeTypeUpdate}
-              ></CreatePortal>
-            </div>
-
-            <div
-              className={
-                "flex flex-col sm:flex-row justify-between items-center mt-2 sm:mt-5"
-              }
-            >
-              <p className="font-semibold  text-gray-600 ">
-                Add, delete, modify member list.
-              </p>
-              <button
-                className={
-                  "bg-sky-500 hover:bg-sky-600 text-center m-2 sm:m-0 p-2 rounded-lg font-medium text-white px-4 flex flex-row justify-center"
-                }
-                onClick={handleRandomMemberAdd}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  {" "}
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6v12m6-6H6"
-                  />{" "}
-                </svg>
-                <p>New member</p>
-              </button>
-            </div>
-            <div className={"px-1"}>
-              <MemberTable
-                members={memberList}
-                attributeTypes={attributeTypeList}
-                onOptionDropdownChange={handleOptionChange}
-                onMemberRemove={handleMemberRemove}
-              />
-            </div>
+            <AttributeTypeManager
+              attributeTypeList={attributeTypeList}
+              onAttributeTypeUpdate={handleAttributeTypeUpdate}
+              onAttributeTypeToggle={handleAttributeTypeToggle}
+            />
+            <MemberListManager
+              memberList={memberList}
+              attributeTypeList={attributeTypeList}
+              onRandomMemberAdd={handleRandomMemberAdd}
+              onOptionChange={handleOptionChange}
+              onMemberRemove={handleMemberRemove}
+            />
           </div>
         </Accordion>
         <Accordion title="2. Grouping setup" isInitialOpen={false}>
