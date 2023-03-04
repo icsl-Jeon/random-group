@@ -180,11 +180,11 @@ export default function Home() {
           isInitialOpen={true}
         >
           <div className={"p-4 "}>
-            <p className="font-semibold mb-2 text-gray-600">
+            <p className="font-semibold mb-2 text-gray-600 sm:text-left text-center">
               Toggle attributes to build member list.
             </p>
 
-            <div className="flex sm:px-3 flex-wrap rounded-lg p-3">
+            <div className="flex sm:px-3 flex-wrap rounded-lg p-3 items-center">
               {attributeTypeList.map((item) => {
                 return (
                   <EditPortal
