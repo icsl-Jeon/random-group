@@ -43,8 +43,9 @@ const Accordion: React.FC<Props> = ({ title, children, isInitialOpen }) => {
       </h2>
 
       <div
+        // The below animation not working as max-h-full. If you want, change max-h-40
         className={`pt-0 overflow-y-auto transition-all duration-400 ease-in ${
-          isOpen ? "max-h-96" : "max-h-0"
+          isOpen ? "max-h-full" : "max-h-0"
         }`}
       >
         <div className="overflow-hidden p-4 border-2 border-b-gray-100">

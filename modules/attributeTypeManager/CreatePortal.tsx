@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Modal from "@/components/Modal";
-import AttributeTypeEditor from "@/components/AttributeTypeEditor";
+import Modal from "@/layout/Modal";
+import AttributeTypeEditor from "@/modules/attributeTypeManager/AttributeTypeEditor";
 import { AttributeType } from "@/lib/types";
 
 interface Props {
-  onAttributeTypeAdd: (newAttributeType: AttributeType) => void;
+  onAttributeTypeAdd: (attributeType: AttributeType) => void;
 }
 
 const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {

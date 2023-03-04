@@ -1,6 +1,6 @@
-import React, {useState, useCallback, useRef} from "react";
-import {AttributeType, Option} from "@/lib/types";
-import OptionList from "@/components/OptionList";
+import React, { useState, useCallback, useRef } from "react";
+import { AttributeType, Option } from "@/lib/types";
+import OptionList from "@/modules/attributeTypeManager/OptionList";
 
 interface Props {
   initialAttributeType: AttributeType;
@@ -9,10 +9,10 @@ interface Props {
 }
 
 const AttributeTypeEditor = ({
-                               initialAttributeType,
-                               toggleModal,
-                               onAttributeTypeUpdate,
-                             }: Props) => {
+  initialAttributeType,
+  toggleModal,
+  onAttributeTypeUpdate,
+}: Props) => {
   const attributeKey = initialAttributeType.key;
   const [attributeName, setAttributeName] = useState<string>(
     initialAttributeType.name
@@ -34,7 +34,7 @@ const AttributeTypeEditor = ({
       // key cannot be changed. Only name is changed
       const updatedItems = prevItems.map((item) => {
         if (item.key === updatedOption.key) {
-          return {...item, name: updatedOption.name};
+          return { ...item, name: updatedOption.name };
         }
         return item;
       });
@@ -45,7 +45,7 @@ const AttributeTypeEditor = ({
     (addedOptionName: string) => {
       setOptionList([
         ...optionList,
-        {key: newOptionId.current, name: addedOptionName},
+        { key: newOptionId.current, name: addedOptionName },
       ]);
       newOptionId.current += 1;
     },
