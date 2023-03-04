@@ -10,11 +10,12 @@ import {
   generateRandomMemberList,
   addAttribute,
   removeAttribute,
+  generateRandomMember,
 } from "@/lib/utility";
 import Swal from "sweetalert2";
 
 export default function Home() {
-  const newKey = useRef(2);
+  const newAttributeKey = useRef(2);
   const [attributeTypeList, setAttributeTypeList] = useState<AttributeType[]>(
     initialAttributeTypeList
   );
@@ -42,9 +43,9 @@ export default function Home() {
       // adding
       setAttributeTypeList([
         ...attributeTypeList,
-        { ...newAttributeType, key: newKey.current },
+        { ...newAttributeType, key: newAttributeKey.current },
       ]);
-      newKey.current++;
+      newAttributeKey.current++;
     }
   };
 
@@ -112,10 +113,13 @@ export default function Home() {
   };
 
   const [memberList, setMemberList] = useState<Member[]>([]);
-
+  const initialMemberLength = 4;
   useEffect(() => {
-    setMemberList(generateRandomMemberList(attributeTypeList, 3));
+    setMemberList(
+      generateRandomMemberList(attributeTypeList, initialMemberLength)
+    );
   }, []);
+  const newMemberKey = useRef(initialMemberLength);
 
   // Member handlers
   const handleOptionChange = (
@@ -153,7 +157,14 @@ export default function Home() {
   };
 
   const handleRandomMemberAdd = () => {
-    // Find all the toggled attribute type list
+    const appliedAttributeList = attributeTypeList.filter((attribute) => {
+      return attribute.isAppliedToMemberList;
+    });
+    setMemberList([
+      ...memberList,
+      generateRandomMember(appliedAttributeList, memberList.length),
+    ]);
+    newMemberKey.current += 1;
   };
 
   return (
@@ -212,6 +223,7 @@ export default function Home() {
                 className={
                   "bg-sky-500 hover:bg-sky-600 text-center m-2 sm:m-0 p-2 rounded-lg font-medium text-white px-4 flex flex-row justify-center"
                 }
+                onClick={handleRandomMemberAdd}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
