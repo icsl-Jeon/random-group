@@ -18,3 +18,12 @@ export interface Member {
     attributeTypeValue: Option;
   }>;
 }
+
+export interface AttributeStatistics {
+  key: number;
+  optionCountList: Array<{ key: number; count: number }>;
+}
+
+export interface Statistics {
+  attributeStatisticsList: Array<AttributeStatistics>;
+}

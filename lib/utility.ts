@@ -1,5 +1,6 @@
-import { AttributeType, Member } from "@/lib/types";
+import { AttributeStatistics, AttributeType, Member } from "@/lib/types";
 import { initialMemberList } from "@/lib/initials";
+import { attribute } from "postcss-selector-parser";
 
 export function generateRandomMember(
   attributeTypeList: AttributeType[],
@@ -7,13 +8,15 @@ export function generateRandomMember(
 ) {
   const newMember: Member = {
     key: key,
-    attributeList: attributeTypeList.map((attribute) => ({
-      attributeTypeKey: attribute.key,
-      attributeTypeValue:
-        attribute.optionList[
-          Math.floor(Math.random() * attribute.optionList.length)
-        ],
-    })),
+    attributeList: attributeTypeList
+      .filter((attribute) => attribute.isAppliedToMemberList)
+      .map((attribute) => ({
+        attributeTypeKey: attribute.key,
+        attributeTypeValue:
+          attribute.optionList[
+            Math.floor(Math.random() * attribute.optionList.length)
+          ],
+      })),
   };
   return newMember;
 }
@@ -52,4 +55,41 @@ export function addAttribute(member: Member, attribute: AttributeType): Member {
       ],
   });
   return { ...member, attributeList: newAttributeList };
+}
+
+export function computeStatistics(
+  attributeTypeList: AttributeType[],
+  memberList: Member[]
+) {
+  const attributeStatisticsList = Array<AttributeStatistics>();
+  for (const attributeType of attributeTypeList) {
+    if (!attributeType.isAppliedToMemberList) continue;
+    const attributeStatistics: AttributeStatistics = {
+      key: attributeType.key,
+      optionCountList: attributeType.optionList.map((option) => {
+        return { key: option.key, count: 0 };
+      }),
+    };
+    attributeStatisticsList.push(attributeStatistics);
+  }
+
+  for (const member of memberList) {
+    for (const attribute of member.attributeList) {
+      const attributeTypeKey = attribute.attributeTypeKey;
+      const attributeTypeValue = attribute.attributeTypeValue;
+
+      const attributeIndex = attributeStatisticsList.findIndex(
+        (statistics) => statistics.key === attributeTypeKey
+      );
+      const optionIndex = attributeStatisticsList[
+        attributeIndex
+      ].optionCountList.findIndex(
+        (option) => option.key === attributeTypeValue.key
+      );
+
+      attributeStatisticsList[attributeIndex].optionCountList[optionIndex]
+        .count++;
+    }
+  }
+  return attributeStatisticsList;
 }
