@@ -2,15 +2,13 @@ import Head from "next/head";
 import Accordion from "@/layout/Accordion";
 import React, { useState, useRef, useEffect } from "react";
 import { initialAttributeTypeList, initialMemberList } from "@/lib/initials";
-import { AttributeType, Member } from "@/lib/types";
-import MemberTable from "@/modules/memberListManager/MemberTable";
-import EditPortal from "@/modules/attributeTypeManager/EditPortal";
-import CreatePortal from "@/modules/attributeTypeManager/CreatePortal";
+import { AttributeType, Member, Statistics } from "@/lib/types";
 import {
   generateRandomMemberList,
   addAttribute,
   removeAttribute,
   generateRandomMember,
+  computeStatistics,
 } from "@/lib/utility";
 import Swal from "sweetalert2";
 import AttributeTypeManager from "@/modules/attributeTypeManager/AttributeTypeManager";
@@ -121,7 +119,7 @@ export default function Home() {
     setMemberList(
       generateRandomMemberList(attributeTypeList, initialMemberLength)
     );
-  }, []);
+  }, [attributeTypeList]);
   const newMemberKey = useRef(initialMemberLength);
 
   // Member handlers
@@ -169,6 +167,29 @@ export default function Home() {
     ]);
     newMemberKey.current += 1;
   };
+
+  // grouping setup
+
+  const [numGroups, setNumGroups] = useState(3);
+  const [idealStatistics, setIdealStatistics] = useState<Statistics>();
+
+  useEffect(() => {
+    const entireStatistics = computeStatistics(attributeTypeList, memberList);
+    const idealAttributeStatisticsList = entireStatistics.map((statistics) => {
+      return {
+        key: statistics.key,
+        optionCountList: statistics.optionCountList.map((optionCount) => {
+          return {
+            key: optionCount.key,
+            count: Math.floor(optionCount.count / numGroups),
+          };
+        }),
+      };
+    });
+    setIdealStatistics({
+      attributeStatisticsList: idealAttributeStatisticsList,
+    });
+  }, [attributeTypeList, memberList, numGroups]);
 
   return (
     <>
