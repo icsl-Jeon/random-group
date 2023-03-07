@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AttributeType, Member, Option } from "@/lib/types";
 import MemberTable from "./MemberTable";
 
