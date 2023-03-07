@@ -116,9 +116,14 @@ export default function Home() {
   const [memberList, setMemberList] = useState<Member[]>([]);
   const initialMemberLength = 4;
   useEffect(() => {
-    setMemberList(
-      generateRandomMemberList(attributeTypeList, initialMemberLength)
-    );
+    if (memberList.length === 0) {
+      const initialMemberList = generateRandomMemberList(
+        attributeTypeList,
+        initialMemberLength
+      );
+
+      setMemberList(initialMemberList);
+    }
   }, [attributeTypeList]);
   const newMemberKey = useRef(initialMemberLength);
 

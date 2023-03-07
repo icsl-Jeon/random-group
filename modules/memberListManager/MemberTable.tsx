@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Member, AttributeType } from "@/lib/types";
+import React, { useState, useEffect, useRef } from "react";
+import { Member, AttributeType, Statistics } from "@/lib/types";
+import { computeStatistics } from "@/lib/utility";
 
 interface Props {
   members: Member[];
@@ -21,6 +22,16 @@ const MemberTable: React.FC<Props> = ({
   const [selectedOptions, setSelectedOptions] = useState<{
     [key: number]: number;
   }>({});
+  const statisticsRef = useRef<Statistics>({
+    attributeStatisticsList: computeStatistics(attributeTypes, members),
+  });
+
+  useEffect(() => {
+    statisticsRef.current.attributeStatisticsList = computeStatistics(
+      attributeTypes,
+      members
+    );
+  }, [attributeTypes, members]);
 
   const handleOptionSelection = (
     memberKey: number,
@@ -66,9 +77,9 @@ const MemberTable: React.FC<Props> = ({
                     className="w-5 h-5"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                 </button>
@@ -102,21 +113,66 @@ const MemberTable: React.FC<Props> = ({
                         );
                       }}
                     >
-                      {attributeType.optionList.map((option) => (
-                        <option key={option.key} value={option.key}>
-                          {option.name}
-                        </option>
-                      ))}
+                      {attributeType.optionList.map((option) => {
+                        return (
+                          <option key={option.key} value={option.key}>
+                            {option.name}
+                          </option>
+                        );
+                      })}
                     </select>
                   </td>
                 );
               })}
             </tr>
           ))}
+          <tr key={members.length} className={"text-sm border-t"}>
+            <td className={"px-4 py-2 font-bold"}>
+              <span>Count </span>
+              <span className={"invisible sm:visible"}>(distribution)</span>
+            </td>
+            {attributeTypes.map((attributeType, index) => {
+              console.log(statisticsRef.current.attributeStatisticsList);
+              return (
+                <td key={attributeType.key} className={"px-4 py-2 "}>
+                  {attributeType.optionList.map((option, index_inner) => {
+                    if (!attributeType.isAppliedToMemberList) return;
+
+                    const attributeIndex =
+                      statisticsRef.current.attributeStatisticsList.findIndex(
+                        (item) => item.key === attributeType.key
+                      );
+                    if (attributeIndex < 0) return;
+
+                    const optionIndex =
+                      statisticsRef.current.attributeStatisticsList[
+                        attributeIndex
+                      ].optionCountList.findIndex(
+                        (item) => item.key === option.key
+                      );
+                    const count =
+                      statisticsRef.current.attributeStatisticsList[
+                        attributeIndex
+                      ].optionCountList[optionIndex].count;
+
+                    return (
+                      <div key={index_inner} className=" sm:px-2 py-1 sm:py-2">
+                        <div>
+                          {option.name} : {count}{" "}
+                        </div>
+                        <span className={"invisible sm:visible"}>
+                          ({Math.floor((100 * count) / members.length)}%)
+                        </span>
+                      </div>
+                    );
+                  })}
+                </td>
+              );
+            })}
+          </tr>
         </tbody>
       </table>
     </div>
   );
 };
-
 export default MemberTable;
