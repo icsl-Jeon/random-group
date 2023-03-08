@@ -13,6 +13,7 @@ import {
 import Swal from "sweetalert2";
 import AttributeTypeManager from "@/modules/attributeTypeManager/AttributeTypeManager";
 import MemberListManager from "@/modules/memberListManager/MemberListManager";
+import GroupingSetup from "@/modules/groupingManager/GroupingSetup";
 
 export default function Home() {
   // Attribute type handlers
@@ -175,7 +176,7 @@ export default function Home() {
 
   // grouping setup
 
-  const [numGroups, setNumGroups] = useState(3);
+  const [numGroups, setNumGroups] = useState(2);
   const [idealStatistics, setIdealStatistics] = useState<Statistics>();
 
   useEffect(() => {
@@ -235,7 +236,11 @@ export default function Home() {
           </div>
         </Accordion>
         <Accordion title="2. Grouping setup" isInitialOpen={false}>
-          <div>My name</div>
+          <GroupingSetup
+            groupSize={numGroups}
+            memberSize={memberList.length}
+            onNumberChange={setNumGroups}
+          ></GroupingSetup>
         </Accordion>
       </div>
     </>
