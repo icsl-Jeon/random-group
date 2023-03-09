@@ -13,8 +13,11 @@ const GroupingSetup: React.FC<Props> = ({
   onNumberChange,
 }) => {
   return (
-    <div>
-      <span>Group total {memberSize} members into </span>
+    <div className={"mb-2 text-center sm:text-left"}>
+      <span className={"font-semibold text-gray-600 "}>
+        Perform grouping total <u className={"font-bold"}>{memberSize}</u>{" "}
+        members into{" "}
+      </span>
       <input
         type="number"
         className={"border"}
