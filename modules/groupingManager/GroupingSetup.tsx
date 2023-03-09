@@ -15,12 +15,12 @@ const GroupingSetup: React.FC<Props> = ({
   return (
     <div className={"mb-2 text-center sm:text-left"}>
       <span className={"font-semibold text-gray-600 "}>
-        Perform grouping total <u className={"font-bold"}>{memberSize}</u>{" "}
-        members into{" "}
+        We will group total <u className={"font-bold"}>{memberSize}</u> members
+        into{" "}
       </span>
       <input
         type="number"
-        className={"border"}
+        className={"w-20 border"}
         value={groupSize}
         onChange={(event) => {
           onNumberChange(Number(event.target.value));
