@@ -235,13 +235,15 @@ export default function Home() {
             />
           </div>
         </Accordion>
-        <Accordion title="2. Grouping setup" isInitialOpen={false}>
+        <Accordion title="2. Grouping setup" isInitialOpen={true}>
           <div className={"p-4"}>
             {" "}
             <GroupingSetup
               groupSize={numGroups}
               memberSize={memberList.length}
               onNumberChange={setNumGroups}
+              attributeTypeList={attributeTypeList}
+              onAttributeTypeUpdate={handleAttributeTypeUpdate}
             ></GroupingSetup>
           </div>
         </Accordion>

@@ -64,6 +64,7 @@ const AttributeTypeEditor = ({
       optionList: optionList,
       key: attributeKey,
       isAppliedToMemberList: false,
+      isStrict: false,
     });
   };
 

@@ -8,6 +8,7 @@ export const initialAttributeTypeList = [
     key: 0,
     newOptionKey: 2,
     isAppliedToMemberList: true,
+    isStrict: false,
   },
   {
     name: "Sex",
@@ -18,6 +19,7 @@ export const initialAttributeTypeList = [
     key: 1,
     newOptionKey: 2,
     isAppliedToMemberList: false,
+    isStrict: false,
   },
 ];
 
