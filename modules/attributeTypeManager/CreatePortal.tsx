@@ -52,6 +52,7 @@ const CreatePortal: React.FC<Props> = ({ onAttributeTypeAdd }: Props) => {
             ],
             newOptionKey: 2,
             isAppliedToMemberList: false,
+            isStrict: false,
           }}
           toggleModal={() => {
             setIsOpen(false);
