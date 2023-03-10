@@ -41,7 +41,7 @@ const GroupingSetup: React.FC<Props> = ({
   return (
     <div className={" text-center  sm:text-left"}>
       <ul className={"text-gray-600 "}>
-        <li className={"mb-6 "}>
+        <li className={"mb-8 "}>
           <div className={"font-semibold mb-4"}>
             Select a number of groups (should be larger than {1} and smaller
             than {memberSize})
@@ -67,7 +67,7 @@ const GroupingSetup: React.FC<Props> = ({
           </div>
           <div className={"flex flex-row sm:px-3 "}>
             <div
-              className={`bg-slate-100  ${
+              className={`${
                 attributeTypeList.findIndex((item) => item.isStrict) < 0
                   ? "bg-sky-300"
                   : "bg-slate-100"
