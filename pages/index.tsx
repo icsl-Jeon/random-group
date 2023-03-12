@@ -14,6 +14,8 @@ import Swal from "sweetalert2";
 import AttributeTypeManager from "@/modules/attributeTypeManager/AttributeTypeManager";
 import MemberListManager from "@/modules/memberListManager/MemberListManager";
 import GroupingSetup from "@/modules/groupingManager/GroupingSetup";
+import GroupingResult from "@/modules/groupingResultManager/GroupingResult";
+import GroupingManager from "@/modules/groupingManager/GroupingManager";
 
 export default function Home() {
   // Attribute type handlers
@@ -197,6 +199,9 @@ export default function Home() {
     });
   }, [attributeTypeList, memberList, numGroups]);
 
+  // grouping result
+  const [groupingResult, setGroupingResult] = useState<number[][]>([]);
+
   return (
     <>
       <Head>
@@ -238,13 +243,23 @@ export default function Home() {
         <Accordion title="2. Grouping setup" isInitialOpen={true}>
           <div className={"p-4"}>
             {" "}
-            <GroupingSetup
+            <GroupingManager
               groupSize={numGroups}
               memberSize={memberList.length}
               onNumberChange={setNumGroups}
               attributeTypeList={attributeTypeList}
               onAttributeTypeUpdate={handleAttributeTypeUpdate}
-            ></GroupingSetup>
+            ></GroupingManager>
+          </div>
+        </Accordion>
+        <Accordion title="3. Grouping result" isInitialOpen={true}>
+          <div className={"p-4"}>
+            {" "}
+            <GroupingResult
+              members={memberList}
+              attributeTypes={attributeTypeList}
+              groupingResult={groupingResult}
+            />
           </div>
         </Accordion>
       </div>

@@ -160,7 +160,7 @@ const MemberTable: React.FC<Props> = ({
                         <div>
                           {option.name} : {count}{" "}
                         </div>
-                        <span className={"invisible sm:visible"}>
+                        <span className={"hidden sm:inline"}>
                           ({Math.floor((100 * count) / members.length)}%)
                         </span>
                       </div>

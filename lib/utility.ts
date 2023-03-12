@@ -1,6 +1,6 @@
-import {AttributeStatistics, AttributeType, Member} from "@/lib/types";
-import {initialMemberList} from "@/lib/initials";
-import {attribute} from "postcss-selector-parser";
+import { AttributeStatistics, AttributeType, Member } from "@/lib/types";
+import { initialMemberList } from "@/lib/initials";
+import { attribute } from "postcss-selector-parser";
 
 export function generateRandomMember(
   attributeTypeList: AttributeType[],
@@ -15,7 +15,7 @@ export function generateRandomMember(
         attributeTypeValue:
           attribute.optionList[
             Math.floor(Math.random() * attribute.optionList.length)
-            ],
+          ],
       })),
   };
   return newMember;
@@ -52,9 +52,9 @@ export function addAttribute(member: Member, attribute: AttributeType): Member {
     attributeTypeValue:
       attribute.optionList[
         Math.floor(Math.random() * attribute.optionList.length)
-        ],
+      ],
   });
-  return {...member, attributeList: newAttributeList};
+  return { ...member, attributeList: newAttributeList };
 }
 
 export function computeStatistics(
@@ -68,7 +68,8 @@ export function computeStatistics(
       key: attributeType.key,
       optionCountList: attributeType.optionList.map((option) => {
         return {
-          key: option.key, count: 0
+          key: option.key,
+          count: 0,
         };
       }),
     };
@@ -85,7 +86,7 @@ export function computeStatistics(
       );
       const optionIndex = attributeStatisticsList[
         attributeIndex
-        ].optionCountList.findIndex(
+      ].optionCountList.findIndex(
         (option) => option.key === attributeTypeValue.key
       );
 
@@ -94,4 +95,22 @@ export function computeStatistics(
     }
   }
   return attributeStatisticsList;
+}
+
+export function performGrouping(
+  attributeTypeList: AttributeType[],
+  memberList: Member[],
+  numGroups: number
+) {
+  // Initialize
+  let groupingResult: number[][] = [];
+
+  for (let i = 0; i < numGroups; i++) {
+    groupingResult.push([]);
+  }
+
+  memberList.map((member, index) => {
+    const assignedGroupIndex = index % numGroups;
+    groupingResult[assignedGroupIndex].push(member.key);
+  });
 }
