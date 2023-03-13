@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Member, AttributeType, Statistics } from "@/lib/types";
 import { computeStatistics } from "@/lib/utility";
+import { scalarOptions } from "yaml";
+import Null = scalarOptions.Null;
 
 interface Props {
   members: Member[];
@@ -22,16 +24,6 @@ const MemberTable: React.FC<Props> = ({
   const [selectedOptions, setSelectedOptions] = useState<{
     [key: number]: number;
   }>({});
-  const statisticsRef = useRef<Statistics>({
-    attributeStatisticsList: computeStatistics(attributeTypes, members),
-  });
-
-  useEffect(() => {
-    statisticsRef.current.attributeStatisticsList = computeStatistics(
-      attributeTypes,
-      members
-    );
-  }, [attributeTypes, members]);
 
   const handleOptionSelection = (
     memberKey: number,
@@ -132,28 +124,19 @@ const MemberTable: React.FC<Props> = ({
               <span className={"invisible sm:visible"}>(distribution)</span>
             </td>
             {attributeTypes.map((attributeType, index) => {
-              console.log(statisticsRef.current.attributeStatisticsList);
               return (
                 <td key={attributeType.key} className={"px-4 py-2 "}>
                   {attributeType.optionList.map((option, index_inner) => {
                     if (!attributeType.isAppliedToMemberList) return;
 
-                    const attributeIndex =
-                      statisticsRef.current.attributeStatisticsList.findIndex(
-                        (item) => item.key === attributeType.key
-                      );
-                    if (attributeIndex < 0) return;
-
-                    const optionIndex =
-                      statisticsRef.current.attributeStatisticsList[
-                        attributeIndex
-                      ].optionCountList.findIndex(
-                        (item) => item.key === option.key
-                      );
-                    const count =
-                      statisticsRef.current.attributeStatisticsList[
-                        attributeIndex
-                      ].optionCountList[optionIndex].count;
+                    let count = 0;
+                    for (const member of members) {
+                      const optionKey = member.attributeList.find(
+                        (attribute) =>
+                          attribute.attributeTypeKey === attributeType.key
+                      )?.attributeTypeValue.key;
+                      if (optionKey === option.key) count++;
+                    }
 
                     return (
                       <div key={index_inner} className=" sm:px-2 py-1 sm:py-2">

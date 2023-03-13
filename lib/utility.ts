@@ -1,4 +1,9 @@
-import { AttributeStatistics, AttributeType, Member } from "@/lib/types";
+import {
+  AttributeStatistics,
+  AttributeType,
+  Member,
+  Statistics,
+} from "@/lib/types";
 import { initialMemberList } from "@/lib/initials";
 import { attribute } from "postcss-selector-parser";
 
@@ -97,20 +102,102 @@ export function computeStatistics(
   return attributeStatisticsList;
 }
 
+export function computeDemerit(
+  statistics: Statistics,
+  idealStatistics: Statistics
+) {
+  let demerit = 0;
+  if (
+    statistics.attributeStatisticsList.length !==
+    idealStatistics.attributeStatisticsList.length
+  ) {
+    console.error("Cannot compute demerit");
+    return -1;
+  }
+
+  for (let i = 0; i < statistics.attributeStatisticsList.length; i++) {
+    const attributeStatisticsList = statistics.attributeStatisticsList[i];
+    const idealAttributeStatisticsList =
+      idealStatistics.attributeStatisticsList[i];
+    if (
+      attributeStatisticsList.optionCountList.length !==
+      idealAttributeStatisticsList.optionCountList.length
+    ) {
+      console.error("Cannot compute demerit");
+      return -1;
+    }
+    for (let j = 0; j < attributeStatisticsList.optionCountList.length; j++) {
+      const count = attributeStatisticsList.optionCountList[j].count;
+      const idealCount = idealAttributeStatisticsList.optionCountList[j].count;
+      // assuming ideal count is lower bound
+      demerit += Math.min(
+        Math.abs(count - idealCount),
+        Math.abs(count - (idealCount + 1))
+      );
+    }
+  }
+  return demerit;
+}
+
 export function performGrouping(
   attributeTypeList: AttributeType[],
   memberList: Member[],
   numGroups: number
 ) {
-  // Initialize
+  const entireStatistics = computeStatistics(attributeTypeList, memberList);
+  const desiredStatistics = {
+    attributeStatisticsList: entireStatistics.map((statistics) => {
+      return {
+        key: statistics.key,
+        optionCountList: statistics.optionCountList.map((optionCount) => {
+          return {
+            key: optionCount.key,
+            count: Math.floor(optionCount.count / numGroups),
+          };
+        }),
+      };
+    }),
+  };
+
+  // Initialize grouping
   let groupingResult: number[][] = [];
+  let demeritList: number[] = [];
 
   for (let i = 0; i < numGroups; i++) {
     groupingResult.push([]);
+    demeritList.push(0.0);
   }
 
   memberList.map((member, index) => {
     const assignedGroupIndex = index % numGroups;
     groupingResult[assignedGroupIndex].push(member.key);
   });
+  // Initialize demerit
+  groupingResult.map((group, index) => {
+    const memberListOfGroup = group.map((key) => {
+      return memberList[key];
+    });
+
+    demeritList[index] = computeDemerit(
+      {
+        attributeStatisticsList: computeStatistics(
+          attributeTypeList,
+          memberListOfGroup
+        ),
+      },
+      desiredStatistics
+    );
+  });
+
+  let need_improve = groupingResult;
+  const groupIndexList = Array(memberList.length).keys();
+  // while (need_improve) {
+  //   // check need improve
+  //   const worstDemerit = Math.max(...demeritList);
+  //   const worstGroupIndex = demeritList.findIndex(
+  //     (elem) => elem === worstDemerit
+  //   );
+  //   // otherGroupIndexList =
+  // }
+  console.log("hey");
 }

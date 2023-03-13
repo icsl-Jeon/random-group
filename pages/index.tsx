@@ -179,25 +179,6 @@ export default function Home() {
   // grouping setup
 
   const [numGroups, setNumGroups] = useState(2);
-  const [idealStatistics, setIdealStatistics] = useState<Statistics>();
-
-  useEffect(() => {
-    const entireStatistics = computeStatistics(attributeTypeList, memberList);
-    const idealAttributeStatisticsList = entireStatistics.map((statistics) => {
-      return {
-        key: statistics.key,
-        optionCountList: statistics.optionCountList.map((optionCount) => {
-          return {
-            key: optionCount.key,
-            count: Math.floor(optionCount.count / numGroups),
-          };
-        }),
-      };
-    });
-    setIdealStatistics({
-      attributeStatisticsList: idealAttributeStatisticsList,
-    });
-  }, [attributeTypeList, memberList, numGroups]);
 
   // grouping result
   const [groupingResult, setGroupingResult] = useState<number[][]>([]);
@@ -245,7 +226,7 @@ export default function Home() {
             {" "}
             <GroupingManager
               groupSize={numGroups}
-              memberSize={memberList.length}
+              memberList={memberList}
               onNumberChange={setNumGroups}
               attributeTypeList={attributeTypeList}
               onAttributeTypeUpdate={handleAttributeTypeUpdate}
