@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Accordion from "@/layout/Accordion";
 import React, { useState, useRef, useEffect } from "react";
-import { initialAttributeTypeList, initialMemberList } from "@/lib/initials";
-import { AttributeType, Member, Statistics } from "@/lib/types";
+import { initialAttributeTypeList } from "@/lib/initials";
+import { AttributeType, Member } from "@/lib/types";
 import {
   generateRandomMemberList,
   addAttribute,

@@ -4,8 +4,6 @@ import {
   Member,
   Statistics,
 } from "@/lib/types";
-import { initialMemberList } from "@/lib/initials";
-import { attribute } from "postcss-selector-parser";
 
 export function generateRandomMember(
   attributeTypeList: AttributeType[],
@@ -139,6 +137,93 @@ export function computeDemerit(
   return demerit;
 }
 
+export function exchangeMembers(
+  memberList1: Member[],
+  memberList2: Member[],
+  index1: number,
+  index2: number
+): [Member[], Member[]] {
+  if (memberList1.length === 0 || memberList2.length === 0) {
+    throw new Error("Both arrays must contain at least one element");
+  }
+
+  if (
+    index1 < 0 ||
+    index1 >= memberList1.length ||
+    index2 < 0 ||
+    index2 >= memberList2.length
+  ) {
+    throw new Error("Invalid index value");
+  }
+
+  const newMemberList1 = [...memberList1];
+  const newMemberList2 = [...memberList2];
+
+  const tempMember = newMemberList1[index1];
+  newMemberList1[index1] = newMemberList2[index2];
+  newMemberList2[index2] = tempMember;
+
+  return [newMemberList1, newMemberList2];
+}
+
+export function computeDifference(
+  member: Member,
+  isOut: boolean,
+  prevStatistics: Statistics,
+  idealStatistics: Statistics
+): [number, Statistics] {
+  let demeritDifference = 0;
+  let newStatistics: Statistics = JSON.parse(JSON.stringify(prevStatistics));
+
+  for (const attributeType of member.attributeList) {
+    const optionKey = attributeType.attributeTypeValue.key;
+
+    const previousCount = prevStatistics.attributeStatisticsList
+      .find((item) => item.key === attributeType.attributeTypeKey)
+      ?.optionCountList.find((item) => item.key === optionKey)?.count;
+
+    if (!previousCount) continue;
+
+    const newCount = previousCount + (isOut ? -1 : 1);
+    const attributeStatistics = newStatistics.attributeStatisticsList.find(
+      (item) => item.key === attributeType.attributeTypeKey
+    );
+    if (attributeStatistics) {
+      const optionCount = attributeStatistics.optionCountList.find(
+        (item) => item.key === optionKey
+      );
+      if (optionCount) {
+        const updatedOptionCount = { ...optionCount, count: newCount };
+        const updatedOptionCountList = attributeStatistics.optionCountList.map(
+          (item) => {
+            return item.key === optionKey ? updatedOptionCount : item;
+          }
+        );
+        attributeStatistics.optionCountList = updatedOptionCountList;
+      }
+    }
+
+    const idealCount = idealStatistics.attributeStatisticsList
+      .find((item) => item.key === attributeType.attributeTypeKey)
+      ?.optionCountList.find((item) => item.key === optionKey)?.count;
+
+    if (idealCount && previousCount) {
+      if (previousCount < idealCount) {
+        if (isOut) demeritDifference++;
+        else demeritDifference--;
+      } else if (previousCount === idealCount) {
+        if (isOut) demeritDifference++;
+      } else if (previousCount === idealCount + 1) {
+        if (!isOut) demeritDifference++;
+      } else {
+        if (isOut) demeritDifference--;
+        else demeritDifference++;
+      }
+    }
+  }
+  return [demeritDifference, newStatistics];
+}
+
 export function performGrouping(
   attributeTypeList: AttributeType[],
   memberList: Member[],
@@ -159,45 +244,69 @@ export function performGrouping(
     }),
   };
 
+  interface Status {
+    demerit: number;
+    statistics: Statistics;
+  }
+
   // Initialize grouping
   let groupingResult: number[][] = [];
-  let demeritList: number[] = [];
+  let statusList: Status[] = [];
 
   for (let i = 0; i < numGroups; i++) {
     groupingResult.push([]);
-    demeritList.push(0.0);
+    statusList.push({
+      demerit: 0.0,
+      statistics: { attributeStatisticsList: [] },
+    });
   }
 
   memberList.map((member, index) => {
     const assignedGroupIndex = index % numGroups;
     groupingResult[assignedGroupIndex].push(member.key);
   });
-  // Initialize demerit
+
+  // Initialize demerit and statistics
   groupingResult.map((group, index) => {
     const memberListOfGroup = group.map((key) => {
       return memberList[key];
     });
-
-    demeritList[index] = computeDemerit(
-      {
-        attributeStatisticsList: computeStatistics(
-          attributeTypeList,
-          memberListOfGroup
-        ),
-      },
+    const statistics = computeStatistics(attributeTypeList, memberListOfGroup);
+    const demerit = computeDemerit(
+      { attributeStatisticsList: statistics },
       desiredStatistics
     );
+
+    statusList[index] = {
+      demerit: demerit,
+      statistics: { attributeStatisticsList: statistics },
+    };
   });
 
   let need_improve = groupingResult;
-  const groupIndexList = Array(memberList.length).keys();
-  // while (need_improve) {
-  //   // check need improve
-  //   const worstDemerit = Math.max(...demeritList);
-  //   const worstGroupIndex = demeritList.findIndex(
-  //     (elem) => elem === worstDemerit
-  //   );
-  //   // otherGroupIndexList =
-  // }
+  const groupIndexList = Array.from({ length: statusList.length }, (_, i) => i);
+  let iterCompleteCount = 0;
+  const maxIter = 200;
+
+  while (need_improve && iterCompleteCount < maxIter) {
+    // find worst group
+    const worstDemerit = statusList.reduce((prev, curr) =>
+      prev.demerit < curr.demerit ? curr : prev
+    );
+    const worstGroupIndex = statusList.findIndex(
+      (elem) => elem === worstDemerit
+    );
+
+    // pick random other group
+    const otherGroupIndexList = groupIndexList.filter(
+      (index) => index !== worstGroupIndex
+    );
+    const randomOtherGroupIndex =
+      otherGroupIndexList[
+        Math.floor(Math.random() * otherGroupIndexList.length)
+      ];
+
+    iterCompleteCount++;
+  }
   console.log("hey");
 }
