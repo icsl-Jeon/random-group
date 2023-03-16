@@ -8,6 +8,7 @@ interface Props {
   onNumberChange: (input: number) => void;
   attributeTypeList: AttributeType[];
   onAttributeTypeUpdate: (attributeType: AttributeType) => void;
+  setGroupingResult: (groupingResult: number[][]) => void;
 }
 
 const GroupingManager: React.FC<Props> = ({
@@ -16,6 +17,7 @@ const GroupingManager: React.FC<Props> = ({
   onNumberChange,
   attributeTypeList,
   onAttributeTypeUpdate,
+  setGroupingResult,
 }) => {
   return (
     <div>
@@ -34,7 +36,9 @@ const GroupingManager: React.FC<Props> = ({
           <div
             className=" text-white text-lg"
             onClick={() => {
-              performGrouping(attributeTypeList, memberList, groupSize);
+              setGroupingResult(
+                performGrouping(attributeTypeList, memberList, groupSize)
+              );
             }}
           >
             Perform grouping !

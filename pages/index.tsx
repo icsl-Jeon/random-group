@@ -117,7 +117,7 @@ export default function Home() {
   };
 
   const [memberList, setMemberList] = useState<Member[]>([]);
-  const initialMemberLength = 4;
+  const initialMemberLength = 8;
   useEffect(() => {
     if (memberList.length === 0) {
       const initialMemberList = generateRandomMemberList(
@@ -178,7 +178,7 @@ export default function Home() {
 
   // grouping setup
 
-  const [numGroups, setNumGroups] = useState(2);
+  const [numGroups, setNumGroups] = useState(3);
 
   // grouping result
   const [groupingResult, setGroupingResult] = useState<number[][]>([]);
@@ -230,6 +230,7 @@ export default function Home() {
               onNumberChange={setNumGroups}
               attributeTypeList={attributeTypeList}
               onAttributeTypeUpdate={handleAttributeTypeUpdate}
+              setGroupingResult={setGroupingResult}
             ></GroupingManager>
           </div>
         </Accordion>

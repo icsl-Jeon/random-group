@@ -33,7 +33,7 @@ const GroupingResult: React.FC<Props> = ({
                 Group {index + 1}
               </div>
               <GroupTable
-                members={memberKeyList.map((key) => members[key])}
+                members={memberKeyList.map((key) => members[members.findIndex(member => member.key === key)])}
                 attributeTypes={attributeTypes}
               ></GroupTable>
             </div>

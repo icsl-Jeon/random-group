@@ -224,11 +224,63 @@ export function computeDifference(
   return [demeritDifference, newStatistics];
 }
 
+export function findBestExchange(
+  memberList1: Member[],
+  memberList2: Member[],
+  attributeList: AttributeType[],
+  desiredStatistics: Statistics
+): [Member, Member] {
+  let minimum_demerit = 1e7;
+  // Exchange a member from memberList 1 to memberList 2, s.t. maximum of demerit is minimized
+  let member1_index_exchange = 0;
+  let member2_index_exchange = 0;
+  for (
+    let member1_index = 0;
+    member1_index < memberList1.length;
+    member1_index++
+  ) {
+    for (
+      let member2_index = 0;
+      member2_index < memberList2.length;
+      member2_index++
+    ) {
+      const [newMemberList1, newMemberList2] = exchangeMembers(
+        memberList1,
+        memberList2,
+        member1_index,
+        member2_index
+      );
+
+      const newStatistics1 = computeStatistics(attributeList, newMemberList1);
+      const newDemerit1 = computeDemerit(
+        { attributeStatisticsList: newStatistics1 },
+        desiredStatistics
+      );
+      const newStatistics2 = computeStatistics(attributeList, newMemberList2);
+      const newDemerit2 = computeDemerit(
+        { attributeStatisticsList: newStatistics2 },
+        desiredStatistics
+      );
+
+      if (Math.max(newDemerit1, newDemerit2) < minimum_demerit) {
+        minimum_demerit = Math.max(newDemerit1, newDemerit2);
+        member1_index_exchange = member1_index;
+        member2_index_exchange = member2_index;
+      }
+    }
+  }
+
+  return [
+    memberList1[member1_index_exchange],
+    memberList2[member2_index_exchange],
+  ];
+}
+
 export function performGrouping(
   attributeTypeList: AttributeType[],
   memberList: Member[],
   numGroups: number
-) {
+): number[][] {
   const entireStatistics = computeStatistics(attributeTypeList, memberList);
   const desiredStatistics = {
     attributeStatisticsList: entireStatistics.map((statistics) => {
@@ -269,7 +321,7 @@ export function performGrouping(
   // Initialize demerit and statistics
   groupingResult.map((group, index) => {
     const memberListOfGroup = group.map((key) => {
-      return memberList[key];
+      return memberList[memberList.findIndex((member) => member.key === key)];
     });
     const statistics = computeStatistics(attributeTypeList, memberListOfGroup);
     const demerit = computeDemerit(
@@ -283,19 +335,21 @@ export function performGrouping(
     };
   });
 
-  let need_improve = groupingResult;
+  let need_improve = true;
   const groupIndexList = Array.from({ length: statusList.length }, (_, i) => i);
   let iterCompleteCount = 0;
   const maxIter = 200;
 
   while (need_improve && iterCompleteCount < maxIter) {
     // find worst group
-    const worstDemerit = statusList.reduce((prev, curr) =>
+    const worstStatus = statusList.reduce((prev, curr) =>
       prev.demerit < curr.demerit ? curr : prev
     );
     const worstGroupIndex = statusList.findIndex(
-      (elem) => elem === worstDemerit
+      (elem) => elem === worstStatus
     );
+
+    console.log(worstStatus.demerit);
 
     // pick random other group
     const otherGroupIndexList = groupIndexList.filter(
@@ -306,7 +360,60 @@ export function performGrouping(
         Math.floor(Math.random() * otherGroupIndexList.length)
       ];
 
+    // exchange member
+    const worstMemberList = groupingResult[worstGroupIndex].map((key) => {
+      return memberList[memberList.findIndex((member) => member.key === key)];
+    });
+    const randomOtherMemberList = groupingResult[randomOtherGroupIndex].map(
+      (key) => {
+        return memberList[memberList.findIndex((member) => member.key === key)];
+      }
+    );
+
+    const [exchangeMemberWorst, exchangeMemberRandomOther] = findBestExchange(
+      worstMemberList,
+      randomOtherMemberList,
+      attributeTypeList,
+      desiredStatistics
+    );
+
+    const indexFromWorstGroup = worstMemberList.findIndex(
+      (item) => item === exchangeMemberWorst
+    );
+    const indexFromRandomOtherGroup = randomOtherMemberList.findIndex(
+      (item) => item === exchangeMemberRandomOther
+    );
+
+    const [newWorstGroupMemberList, newRandomOtherGroupMemberList] =
+      exchangeMembers(
+        worstMemberList,
+        randomOtherMemberList,
+        indexFromWorstGroup,
+        indexFromRandomOtherGroup
+      );
+
+    // update reflecting new member list
+    groupingResult[worstGroupIndex] = [
+      ...newWorstGroupMemberList.map((member) => member.key),
+    ];
+    groupingResult[randomOtherGroupIndex] = [
+      ...newRandomOtherGroupMemberList.map((member) => member.key),
+    ];
+
+    statusList[worstGroupIndex].statistics.attributeStatisticsList =
+      computeStatistics(attributeTypeList, newWorstGroupMemberList);
+    statusList[worstGroupIndex].demerit = computeDemerit(
+      statusList[worstGroupIndex].statistics,
+      desiredStatistics
+    );
+    statusList[randomOtherGroupIndex].statistics.attributeStatisticsList =
+      computeStatistics(attributeTypeList, newRandomOtherGroupMemberList);
+    statusList[randomOtherGroupIndex].demerit = computeDemerit(
+      statusList[randomOtherGroupIndex].statistics,
+      desiredStatistics
+    );
+
     iterCompleteCount++;
   }
-  console.log("hey");
+  return groupingResult;
 }
