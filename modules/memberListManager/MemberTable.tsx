@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { Member, AttributeType, Statistics } from "@/lib/types";
 import { computeStatistics } from "@/lib/utility";
 import { scalarOptions } from "yaml";
-import Null = scalarOptions.Null;
 
 interface Props {
   members: Member[];
