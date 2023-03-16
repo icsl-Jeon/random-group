@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Accordion from "@/layout/Accordion";
 import React, { useState, useRef, useEffect } from "react";
-import { initialAttributeTypeList, initialMemberList } from "@/lib/initials";
-import { AttributeType, Member, Statistics } from "@/lib/types";
+import { initialAttributeTypeList } from "@/lib/initials";
+import { AttributeType, Member } from "@/lib/types";
 import {
   generateRandomMemberList,
   addAttribute,
@@ -14,6 +14,8 @@ import Swal from "sweetalert2";
 import AttributeTypeManager from "@/modules/attributeTypeManager/AttributeTypeManager";
 import MemberListManager from "@/modules/memberListManager/MemberListManager";
 import GroupingSetup from "@/modules/groupingManager/GroupingSetup";
+import GroupingResult from "@/modules/groupingResultManager/GroupingResult";
+import GroupingManager from "@/modules/groupingManager/GroupingManager";
 
 export default function Home() {
   // Attribute type handlers
@@ -115,7 +117,7 @@ export default function Home() {
   };
 
   const [memberList, setMemberList] = useState<Member[]>([]);
-  const initialMemberLength = 4;
+  const initialMemberLength = 8;
   useEffect(() => {
     if (memberList.length === 0) {
       const initialMemberList = generateRandomMemberList(
@@ -176,26 +178,10 @@ export default function Home() {
 
   // grouping setup
 
-  const [numGroups, setNumGroups] = useState(2);
-  const [idealStatistics, setIdealStatistics] = useState<Statistics>();
+  const [numGroups, setNumGroups] = useState(3);
 
-  useEffect(() => {
-    const entireStatistics = computeStatistics(attributeTypeList, memberList);
-    const idealAttributeStatisticsList = entireStatistics.map((statistics) => {
-      return {
-        key: statistics.key,
-        optionCountList: statistics.optionCountList.map((optionCount) => {
-          return {
-            key: optionCount.key,
-            count: Math.floor(optionCount.count / numGroups),
-          };
-        }),
-      };
-    });
-    setIdealStatistics({
-      attributeStatisticsList: idealAttributeStatisticsList,
-    });
-  }, [attributeTypeList, memberList, numGroups]);
+  // grouping result
+  const [groupingResult, setGroupingResult] = useState<number[][]>([]);
 
   return (
     <>
@@ -238,13 +224,24 @@ export default function Home() {
         <Accordion title="2. Grouping setup" isInitialOpen={true}>
           <div className={"p-4"}>
             {" "}
-            <GroupingSetup
+            <GroupingManager
               groupSize={numGroups}
-              memberSize={memberList.length}
+              memberList={memberList}
               onNumberChange={setNumGroups}
               attributeTypeList={attributeTypeList}
               onAttributeTypeUpdate={handleAttributeTypeUpdate}
-            ></GroupingSetup>
+              setGroupingResult={setGroupingResult}
+            ></GroupingManager>
+          </div>
+        </Accordion>
+        <Accordion title="3. Grouping result" isInitialOpen={true}>
+          <div className={"p-4"}>
+            {" "}
+            <GroupingResult
+              members={memberList}
+              attributeTypes={attributeTypeList}
+              groupingResult={groupingResult}
+            />
           </div>
         </Accordion>
       </div>
