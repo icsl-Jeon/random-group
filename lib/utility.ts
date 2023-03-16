@@ -280,7 +280,7 @@ export function performGrouping(
   attributeTypeList: AttributeType[],
   memberList: Member[],
   numGroups: number
-) {
+): number[][] {
   const entireStatistics = computeStatistics(attributeTypeList, memberList);
   const desiredStatistics = {
     attributeStatisticsList: entireStatistics.map((statistics) => {
@@ -342,14 +342,14 @@ export function performGrouping(
 
   while (need_improve && iterCompleteCount < maxIter) {
     // find worst group
-    const worstDemerit = statusList.reduce((prev, curr) =>
+    const worstStatus = statusList.reduce((prev, curr) =>
       prev.demerit < curr.demerit ? curr : prev
     );
     const worstGroupIndex = statusList.findIndex(
-      (elem) => elem === worstDemerit
+      (elem) => elem === worstStatus
     );
 
-    console.log(worstDemerit);
+    console.log(worstStatus.demerit);
 
     // pick random other group
     const otherGroupIndexList = groupIndexList.filter(
@@ -415,4 +415,5 @@ export function performGrouping(
 
     iterCompleteCount++;
   }
+  return groupingResult;
 }

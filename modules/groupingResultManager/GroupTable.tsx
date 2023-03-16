@@ -8,15 +8,14 @@ interface Props {
 }
 
 const GroupTable: React.FC<Props> = ({ members, attributeTypes }) => {
-  const statisticsRef = useRef<Statistics>({
+  const [statistics, setStatistics] = useState<Statistics>(() => ({
     attributeStatisticsList: computeStatistics(attributeTypes, members),
-  });
+  }));
 
   useEffect(() => {
-    statisticsRef.current.attributeStatisticsList = computeStatistics(
-      attributeTypes,
-      members
-    );
+    setStatistics({
+      attributeStatisticsList: computeStatistics(attributeTypes, members),
+    });
   }, [attributeTypes, members]);
 
   return (
@@ -65,21 +64,19 @@ const GroupTable: React.FC<Props> = ({ members, attributeTypes }) => {
                     if (!attributeType.isAppliedToMemberList) return;
 
                     const attributeIndex =
-                      statisticsRef.current.attributeStatisticsList.findIndex(
+                      statistics.attributeStatisticsList.findIndex(
                         (item) => item.key === attributeType.key
                       );
                     if (attributeIndex < 0) return;
 
-                    const optionIndex =
-                      statisticsRef.current.attributeStatisticsList[
-                        attributeIndex
-                      ].optionCountList.findIndex(
-                        (item) => item.key === option.key
-                      );
+                    const optionIndex = statistics.attributeStatisticsList[
+                      attributeIndex
+                    ].optionCountList.findIndex(
+                      (item) => item.key === option.key
+                    );
                     const count =
-                      statisticsRef.current.attributeStatisticsList[
-                        attributeIndex
-                      ].optionCountList[optionIndex].count;
+                      statistics.attributeStatisticsList[attributeIndex]
+                        .optionCountList[optionIndex].count;
 
                     return (
                       <div key={index_inner} className=" py-1 sm:py-2">
