@@ -199,6 +199,9 @@ export default function Home() {
           async
           strategy="beforeInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+          onError={(e) => {
+            console.error("Script failed to load", e);
+          }}
         />
       </Head>
 
