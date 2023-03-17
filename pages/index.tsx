@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Script from "next/script";
 import Accordion from "@/layout/Accordion";
 import React, { useState, useRef, useEffect } from "react";
 import { initialAttributeTypeList } from "@/lib/initials";
@@ -191,11 +192,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         <link rel="icon" href="/favicon.ico" />
-        <script
+
+        <Script
+          id="Adsense-id"
+          data-ad-client="ca-pub-6825630715558369"
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6825630715558369"
-          crossOrigin="anonymous"
-        ></script>
+          strategy="beforeInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+        />
       </Head>
 
       <div className="mx-auto max-w-screen-lg">
