@@ -7,10 +7,9 @@ export default function Document() {
       <Head />
       <Script
         id="Adsense-id"
-        data-ad-client="ca-pub-6825630715558369"
         async
         strategy="beforeInteractive"
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6825630715558369"
         onError={(e) => {
           console.error("Script failed to load", e);
         }}
