@@ -3,7 +3,7 @@ export default function Tutorial() {
     <div className="flex flex-col items-center">
       {" "}
       <br></br>
-      <h1 className=" mx-auto text-4xl sm:text-5xl text-center sm:text-left max-w-2xl    p-6 sm:p-10">
+      <h1 className=" mx-auto text-4xl sm:text-5xl text-center sm:text-left max-w-xl    py-6 sm:p-10">
         Welcome to a truly intelligent group generator.
       </h1>
       <br></br>
@@ -19,7 +19,7 @@ export default function Tutorial() {
           tool which can take multiple attributes into considerations. For
           example, a teacher wants to make students' groups where each group has
           almost equal sex ratio while average scores are well distributed
-          across groups. Finding an optimal balance might be even challenging
+          across groups. Finding an optimal balance might be challenging even
           for a human.
         </p>
         <p className="mx-3 text-lg sm:text-xl text-gray-500 my-2">
@@ -29,12 +29,10 @@ export default function Tutorial() {
           members' distribution.
         </p>
       </section>
-      <div className=" absolute bottom-10 w-full flex flex-col items-center">
+      <div className="fixed bottom-0 w-full flex flex-col items-center bg-white  shadow-sky-300">
         {" "}
-        <br></br>
         <hr className="w-full sm:max-w-xl "></hr>
-        <br></br>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center py-2 sm:py-5">
           <button
             className="flex items-center"
             onClick={() => {
