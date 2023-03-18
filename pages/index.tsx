@@ -217,7 +217,6 @@ export default function Home() {
           title="1. Register members to be grouped"
           isInitialOpen={true}
         >
-          jira
           <div className={"p-4 "}>
             <AttributeTypeManager
               attributeTypeList={attributeTypeList}
