@@ -17,10 +17,11 @@ const AttributeTypeManager: React.FC<Props> = ({
   return (
     <div>
       <p className="font-semibold mb-2 text-gray-600 sm:text-left text-center">
-        Toggle attributes to build member list.
+        Toggle attributes to build member list. You can modify or add custom
+        attributes.
       </p>
 
-      <div className="flex sm:px-3 flex-wrap rounded-lg p-3 items-center">
+      <div className="flex sm:px-3 flex-wrap rounded-lg p-2 items-center">
         {attributeTypeList.map((item) => {
           return (
             <EditPortal

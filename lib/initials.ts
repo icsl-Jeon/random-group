@@ -7,7 +7,7 @@ export const initialAttributeTypeList = [
     ],
     key: 0,
     newOptionKey: 2,
-    isAppliedToMemberList: true,
+    isAppliedToMemberList: false,
     isStrict: false,
   },
   {
@@ -18,6 +18,19 @@ export const initialAttributeTypeList = [
     ],
     key: 1,
     newOptionKey: 2,
+    isAppliedToMemberList: true,
+    isStrict: false,
+  },
+
+  {
+    name: "Age",
+    optionList: [
+      { key: 0, name: "10s" },
+      { key: 1, name: "20s" },
+      { key: 2, name: "20s" },
+    ],
+    key: 2,
+    newOptionKey: 3,
     isAppliedToMemberList: true,
     isStrict: false,
   },

@@ -101,7 +101,7 @@ const GroupingSetup: React.FC<Props> = ({
             }}
           /> */}
         </li>
-        <li>
+        {/* <li>
           <div className={"text-gray-600 font-semibold mb-4"}>
             Select an attribute to be strictly diverse.
           </div>
@@ -138,7 +138,7 @@ const GroupingSetup: React.FC<Props> = ({
                 );
             })}
           </div>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

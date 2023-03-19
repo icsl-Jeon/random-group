@@ -58,11 +58,11 @@ const GroupTable: React.FC<Props> = ({ members, attributeTypes }) => {
           <tr key={members.length} className={"text-sm border-t"}>
             <td className={"px-4 py-2 font-bold"}></td>
             {attributeTypes.map((attributeType, index) => {
+              if (!attributeType.isAppliedToMemberList) return;
+
               return (
                 <td key={attributeType.key} className={"px-2 py-2 "}>
                   {attributeType.optionList.map((option, index_inner) => {
-                    if (!attributeType.isAppliedToMemberList) return;
-
                     const attributeIndex =
                       statistics.attributeStatisticsList.findIndex(
                         (item) => item.key === attributeType.key

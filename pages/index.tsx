@@ -196,7 +196,7 @@ export default function Home() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
 
         <Script
           id="Adsense-id"
@@ -246,7 +246,7 @@ export default function Home() {
           title="1. Register members to be grouped"
           isInitialOpen={true}
         >
-          <div className={"p-4 "}>
+          <div className={"p-2 sm:p-4 "}>
             <AttributeTypeManager
               attributeTypeList={attributeTypeList}
               onAttributeTypeUpdate={handleAttributeTypeUpdate}

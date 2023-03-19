@@ -123,11 +123,11 @@ const MemberTable: React.FC<Props> = ({
               <span className={"invisible sm:visible"}>(distribution)</span>
             </td>
             {attributeTypes.map((attributeType, index) => {
+              if (!attributeType.isAppliedToMemberList) return;
+
               return (
                 <td key={attributeType.key} className={"px-4 py-2 "}>
                   {attributeType.optionList.map((option, index_inner) => {
-                    if (!attributeType.isAppliedToMemberList) return;
-
                     let count = 0;
                     for (const member of members) {
                       const optionKey = member.attributeList.find(
