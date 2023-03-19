@@ -11,7 +11,7 @@ export const initialAttributeTypeList = [
     isStrict: false,
   },
   {
-    name: "Sex",
+    name: "Gender",
     optionList: [
       { key: 0, name: "Male" },
       { key: 1, name: "Female" },
