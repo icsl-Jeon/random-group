@@ -3,7 +3,7 @@ export default function Tutorial() {
     <div className="flex flex-col items-center">
       {" "}
       <br></br>
-      <h1 className=" mx-auto text-4xl sm:text-5xl text-center sm:text-left max-w-xl    py-6 sm:p-10">
+      <h1 className=" mx-auto text-4xl sm:text-5xl text-center sm:text-left max-w-xl    p-6 sm:p-10">
         Welcome to a truly intelligent group generator.
       </h1>
       <br></br>

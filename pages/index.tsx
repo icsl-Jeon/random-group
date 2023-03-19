@@ -215,7 +215,12 @@ export default function Home() {
             Diverse group generator
           </h1>
           <div className="mr-4 font-semilight text-sky-400 hidden sm:inline">
-            <Link href={"/posts/tutorial"}> Read docs</Link>
+            <Link href={"/posts/tutorial"}>
+              {" "}
+              <div className="hover:bg-slate-100 p-3 duration-300 rounded-md">
+                Read docs
+              </div>
+            </Link>
           </div>
           <div className="inline sm:hidden mr-2 pt-1">
             <Link href={"/posts/tutorial"} passHref>
