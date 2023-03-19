@@ -231,7 +231,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="mx-2 flex flex-col items-center sm:items-start bg-gradient-to-br from-indigo-100  via-slate-50 via-slate-100 to-sky-100 pt-24 sm:pt-40 pb-10 mb-2 rounded-xl">
+        <div className="mx-3 sm:mx-0 flex flex-col items-center sm:items-start bg-gradient-to-br from-indigo-100  via-slate-50 via-slate-100 to-sky-100 pt-24 sm:pt-40 pb-10 mb-2 rounded-xl">
           <h1 className="mx-auto sm:ml-3 pt-5 px-3 sm:px-10 text-center  font-sans text-3xl font-bold text-black sm:text-left">
             Diverse group generator
           </h1>
