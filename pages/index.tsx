@@ -11,6 +11,8 @@ import {
   generateRandomMember,
   computeStatistics,
 } from "@/lib/utility";
+import thumbnail from "@/public/image1.png";
+import Image from "next/image";
 import Swal from "sweetalert2";
 import AttributeTypeManager from "@/modules/attributeTypeManager/AttributeTypeManager";
 import MemberListManager from "@/modules/memberListManager/MemberListManager";
@@ -209,37 +211,30 @@ export default function Home() {
         />
       </Head>
 
-      <div className="mx-auto max-w-screen-lg">
-        <div className="flex justify-between items-center ">
-          <h1 className="mx-auto sm:ml-3 py-5 px-2 text-center  font-sans text-3xl font-bold text-gray-600 sm:text-left">
-            Diverse group generator
-          </h1>
-          <div className="mr-4 font-semilight text-sky-400 hidden sm:inline">
+      <div className="mx-auto max-w-screen-lg ">
+        <div className="flex flex-col items-center sm:flex-row-reverse p-2">
+          <div className=" font-semilight text-gray-600 ml-4 hover:bg-slate-100 rounded-md  ">
             <Link href={"/posts/tutorial"}>
               {" "}
-              <div className="hover:bg-slate-100 p-3 duration-300 rounded-md">
-                Read docs
+              <div className="  duration-300 flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z" />
+                  <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
+                </svg>
+                <span className="ml-1">Read docs</span>
               </div>
             </Link>
           </div>
-          <div className="inline sm:hidden mr-2 pt-1">
-            <Link href={"/posts/tutorial"} passHref>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="skyblue"
-                className="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                />
-              </svg>
-            </Link>
-          </div>
+        </div>
+        <div className="mx-2 flex flex-col items-center sm:items-start bg-gradient-to-br from-indigo-100  via-slate-50 via-slate-100 to-sky-100 pt-24 sm:pt-40 pb-10 mb-2 rounded-xl">
+          <h1 className="mx-auto sm:ml-3 pt-5 px-3 sm:px-10 text-center  font-sans text-3xl font-bold text-black sm:text-left">
+            Diverse group generator
+          </h1>
         </div>
 
         <Accordion
