@@ -212,7 +212,7 @@ export default function Home() {
       </Head>
 
       <div className="mx-auto max-w-screen-lg ">
-        <div className="flex flex-col items-center sm:flex-row-reverse p-2">
+        {/* <div className="flex flex-col items-center sm:flex-row-reverse p-2">
           <div className=" font-semilight text-gray-600 ml-4 hover:bg-slate-100 rounded-md  ">
             <Link href={"/posts/tutorial"}>
               {" "}
@@ -230,12 +230,37 @@ export default function Home() {
               </div>
             </Link>
           </div>
-        </div>
-        <div className="mx-3 sm:mx-0 flex flex-col items-center sm:items-start bg-gradient-to-br from-indigo-100  via-slate-50 via-slate-100 to-sky-100 pt-24 sm:pt-40 pb-10 mb-2 rounded-xl">
+        </div> */}
+        <div className="mx-3 sm:mx-0 flex flex-col items-center sm:items-start bg-gradient-to-br from-indigo-100  via-slate-50 via-slate-100 to-sky-100 pt-24 sm:pt-40 pb-10 my-3 rounded-xl">
           <h1 className="mx-auto sm:ml-3 pt-5 px-3 sm:px-10 text-center  font-sans text-3xl font-bold text-black sm:text-left">
             Diverse group generator
           </h1>
         </div>
+
+        <Accordion title="Overview and feature" isInitialOpen={true}>
+          <section className="mx-auto px-3 my-4 sm:my-10">
+            <p className="mx-3 text-lg sm:text-xl text-gray-500 my-2">
+              {" "}
+              This web application divides a number of members into groups, so
+              that each group have a balanced distribution regarding on{" "}
+              <u>multiple attributes simultaneously</u>.{" "}
+            </p>
+            <p className="mx-3 text-lg sm:text-xl text-gray-500 my-2">
+              What makes our tool different from others is that there is few
+              online tool which can take multiple attributes into
+              considerations. For example, a teacher wants to make students'
+              groups where each group has almost equal sex ratio while average
+              scores are well distributed across groups. Finding an optimal
+              balance might be challenging even for a human.
+            </p>
+            <p className="mx-3 text-lg sm:text-xl text-gray-500 my-2">
+              This online tool finds a balanced grouping with respect to
+              multiple attributes by running an optimization, where its
+              objective is to make the distribution of each group as similar as
+              possible with the whole members' distribution.
+            </p>
+          </section>
+        </Accordion>
 
         <Accordion
           title="1. Register members to be grouped"
