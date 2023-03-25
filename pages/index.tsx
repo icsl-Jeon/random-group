@@ -358,7 +358,7 @@ export default function Home() {
             . We can toggle or untoggle to apply the attribute into our member
             table. <br></br>
             Second step is compose the member table by adding member{" "}
-            <div className="ml-2 inline-block align-middle">
+            <span className="ml-2 inline-block align-middle">
               <button
                 className={
                   "inline- bg-sky-500 hover:bg-sky-600 text-center p-1 rounded-lg font-medium text-white px-2 flex flex-row justify-center"
@@ -381,11 +381,11 @@ export default function Home() {
                 </svg>
                 <p>New member</p>
               </button>
-            </div>
+            </span>
             . This creates a new member by randomly choosing options of applied
             attributes. You can edit the options by drop-down selector. You can
             remove each member by clicking
-            <div className="inline-block align-middle">
+            <span className="inline-block align-middle">
               {" "}
               <button className={" rounded-full hover:bg-slate-200"}>
                 <svg
@@ -401,7 +401,7 @@ export default function Home() {
                   />
                 </svg>
               </button>
-            </div>
+            </span>
             .
           </p>
           <h3 className="text-xl  text-gray-8s00">
